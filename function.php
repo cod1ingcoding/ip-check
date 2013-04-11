@@ -1,9 +1,11 @@
 <?php
 
+// 不带cache的查询函数
 function ip_check($ip) {
 	$need = ip2long($ip);
 
-	$strIPs = file_get_contents('ip_list.txt');
+	$strIPs = file_get_contents(dirname(__FILE__) . '/ip_list.txt');
+	$strIPs = trim($strIPs);
 	$arrRules = explode(',', $strIPs);
 	$arrIPs = array();
 
@@ -11,8 +13,8 @@ function ip_check($ip) {
 		$arr = explode('-', $v);
 		if (count($arr) == 1) $arr[1] = $arr[0];
 
-		$arrIPs[] = $arr[0];
-		$arrIPs[] = $arr[1];
+		$arrIPs[] = trim($arr[0]);
+		$arrIPs[] = trim($arr[1]);
 	}
 
 	foreach($arrIPs as $k => $ip) {
